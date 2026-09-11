@@ -1,0 +1,22 @@
+{
+  "name": "@topla/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "lint": "eslint \"src/**/*.{ts,tsx}\""
+  },
+  "dependencies": {
+    "@topla/types": "workspace:*",
+    "@topla/utils": "workspace:*",
+    "react": "^18.3.0",
+    "react-native": "^0.75.0"
+  },
+  "devDependencies": {
+    "@react-native/babel-preset": "^0.75.0",
+    "@types/react": "^18.3.0",
+    "typescript": "^5.5.0"
+  }
+}

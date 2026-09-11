@@ -1,0 +1,51 @@
+version: "3.9"
+
+# Локальная разработка. Отдельные staging/production compose-файлы и CI/CD
+# pipeline добавляются на ШАГ 16-17 (docs/mvp-roadmap.md).
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: topla
+      POSTGRES_PASSWORD: topla
+      POSTGRES_DB: topla
+    ports:
+      - "5432:5432"
+    volumes:
+      - topla_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U topla"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ../../
+      dockerfile: infrastructure/docker/api.Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ../../apps/api/.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+
+volumes:
+  topla_postgres_data:

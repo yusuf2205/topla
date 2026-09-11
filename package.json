@@ -1,0 +1,20 @@
+{
+  "name": "topla",
+  "private": true,
+  "version": "0.1.0",
+  "description": "TOPLA — multi-vendor marketplace platform (Web, Mobile, Seller & Admin Dashboards, API)",
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev:api": "pnpm --filter @topla/api start:dev",
+    "dev:web": "pnpm --filter @topla/web dev",
+    "dev:admin": "pnpm --filter @topla/admin dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "prisma:generate": "pnpm --filter @topla/api prisma:generate",
+    "prisma:migrate": "pnpm --filter @topla/api prisma:migrate"
+  }
+}
